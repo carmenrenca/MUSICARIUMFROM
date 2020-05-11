@@ -19,6 +19,7 @@ import ArticleCategori from './components/ArticleCategori.vue';
 import CreateArticle from './components/CreateArticle.vue';
 import CrearCategori from './components/CrearCategory.vue';
 import favorito from './components/favoritos.vue';
+import Blog from './components/blog.vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -40,7 +41,7 @@ Vue.config.productionTip = false
 
 const  routes=[
   {path:'/', name:'login' ,component: login},
-  {path:'/ArticleCategori', component: ArticleCategori},
+  {path:'/ArticleCategori/:title',  name:'articlecategori', component: ArticleCategori},
   {path:'/favorito', component:favorito},
   {path:'/createarticle', component: CreateArticle},
   {path:'/home', component: LastArticle},
@@ -53,7 +54,8 @@ const  routes=[
   {path:'/registro',component:registro,  name:'registro'},
   {path:'/fintramite', component:fintramite},
   {path:'/pedidos', component:pedidos},
-  {path:'/saveCategori', component:CrearCategori}
+  {path:'/saveCategori', component:CrearCategori},
+  {path:'/blog', component:Blog},
 ]
 
 //hooks(this.routes)

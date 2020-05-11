@@ -23,21 +23,26 @@
                         <router-link to="/home">Inicio</router-link>
                       
                         </li>
-                         <li >
+                         <li v-if="this.rol=='Cliente'" >
                         <router-link to="/pedidos">Mis Pedidos</router-link>
                       
                         </li>
-                      
+                        <li >
+                       <router-link v-if="this.rol=='Administrador'" to="/Cliente">Pedidos</router-link>
+                        </li>
                        
                         <li >
                         <router-link to="/TablonEventos">Eventos</router-link>
                       
                         </li>
                         <li >
-                       <router-link to="/Cliente">Usuarios</router-link>
+                       <router-link v-if="this.rol=='Administrador'" to="/Cliente">Usuarios</router-link>
+                        </li>
+                          <li >
+                       <router-link v-if="this.rol=='cliente'" to="/Cliente">Mi Perfil</router-link>
                         </li>
                         <li>
-                            <router-link to="/favorito" >Favoritos</router-link>
+                            <router-link v-if="this.rol=='cliente'" to="/favorito" >Favoritos</router-link>
                         </li>
                             <li >
                          
@@ -61,7 +66,7 @@
  <div id="categorias">
   <ul v-for="categori in categori" :key="categori">
            
-           <li><router-link :to="{path:'/ArticleCategori',  params:{id: categori.title}}">{{categori.title}}
+           <li><router-link :to="{name:'articlecategori',  params:{title: categori.title}}">{{categori.title}}
               </router-link> </li>
          </ul>
  </div>
@@ -74,7 +79,7 @@
 </template>
 
 <script>
-
+ import jwtDecode from 'jwt-decode'
   import Swal from 'sweetalert2'
 import Slider2 from '@jeremyhamm/vue-slider'
 import {global} from "../../global";
@@ -89,7 +94,9 @@ export default {
       }, rol:""
     }),
     mounted(){
-     this.verificarol(); this.getcategori();
+   
+ this.getcategori();
+     this.verificarol(); 
 
     },
       components:{
@@ -101,7 +108,7 @@ export default {
     name:'HeaderComponent',
      methods:{
         getcategori(){
-      axios.get(this.url+"articleCategori").then(res=>{
+         axios.get(this.url+"articleCategori").then(res=>{
           if (res.data.status == "success") {
           this.categori = res.data.Categoria
           console.log(this.categori);
@@ -109,10 +116,11 @@ export default {
       })
     },
      verificarol(){
-     
-        this.rol= localStorage.getItem('rol');
-     console.log(this.rol+"%%%%%%%%%%%%%%")
-            
+
+               const token = localStorage.token
+const decoded = jwtDecode(token);
+          
+         this.rol=decoded.role;
             
                 },
   cerrarsesion(){

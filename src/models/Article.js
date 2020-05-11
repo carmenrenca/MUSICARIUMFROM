@@ -1,7 +1,7 @@
 class Article{
 
 
-    constructor(Name,precio,cantidad,descripcion, unidad, imagen,categoria){
+    constructor(Name,precio,cantidad,descripcion, unidad, imagen,categoria,fav){
         this.Name=Name;
         this.Precio__c=precio;
         this.Cantidad__c=cantidad;
@@ -10,6 +10,7 @@ class Article{
         this.imagen=imagen;
         this.categoria=categoria;
         this.date=null;
+    this.fav=fav;
     }
 /**title: String,
 content: String,

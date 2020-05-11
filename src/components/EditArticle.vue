@@ -17,7 +17,7 @@
             <label for="stock">Stock</label>
             <input type="text" name="stock" v-model="article.stock__c" />
           </div>
-            <div class="form-group">
+                <div class="form-group">
             <label for="exampleFormControlSelect1">Categoria</label>
             <select
               class="form-control"
@@ -72,7 +72,7 @@ export default {
       url: global.url,
       article: new Article("", "", "", "","","",""),
       isEdit: true,
-      
+       categori: []
     };
   },
   mounted() {
@@ -161,9 +161,9 @@ export default {
         console.log(res)
         if (res.data.status == "success") {
           this.categori = res.data.Categoria;
-          console.log(res.data.Categoria);
+          console.log(this.categori);
         } else {
-          console.log(res.data.status);
+          console.log(this.categori);
         }
       });
     }

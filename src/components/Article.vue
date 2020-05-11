@@ -10,19 +10,33 @@
   <img 
             :src="url+'get-image/'+article.imagen" :alt="article.Name" v-if="article.imagen" class="cardimg"
             />
-
-</div>
-    <div id="product-info">
-        <div class="descripcionProduc">
+            </div>
+   <div class="descripcionProduc">
       <p>{{article.Descripcion__c}}</p>
      
         <p class="display-4" style="text-align:right">{{article.Precio__c}}€</p>
+     
         <a class="addCart" @click="guardarProductosLocalStorage(article)" >Añadir a la cesta</a>
-          <a class="addfav" @click="guardarProductosLocalStorage(article)" >Añadir Favorito</a>
-   </div>
-      <router-link  :to="'/editarticle/'+article._id" class="btn btn-warning">Editar</router-link>
+           <div v-if="aux==false">
+       <a class="addfav" @click="addfavoritos(article._id)" >Añadir Favorito</a>
+         <a ><img src='../assets/heart.png' class="logofavarticle" alt="Logotipo"/></a>   
+
+        </div>
+          <div  v-if="aux==true" >
+              <a class="addfav" @click="deletefavorito(article)" >Eliminar de  Favorito</a>
+         <a  ><img src='../assets/heartblack.png' class="logofavarticle" alt="Logotipo"/></a>   
+
+          </div>
+          
+          <div  v-show="this.rol=='Administrador'" class="buttonarticle">
+             <router-link  :to="'/editarticle/'+article._id" class="btn btn-warning">Editar</router-link>
                 <a  @click="deleteArticle(article._id)" to="/eliminar" class="btn btn-danger">Eliminar</a>
-    </div>
+          </div>
+            
+   </div>
+   
+
+  
   
     </div>
    
@@ -32,7 +46,7 @@
 
 <script>
 
-
+ import jwtDecode from 'jwt-decode'
 import {global} from '../../global';
 import axios from "axios";
 import swal from "sweetalert";
@@ -46,14 +60,16 @@ export default {
     },
     data(){
         return {
-            url: global.url,
-     article : new Article("","","","",1),
-
+            url: global.url,Email:'',
+     article : new Article("","","","",1,"",""),
+    aux:false,
              rol:"",        productos:[]
         }
     }, mounted(){
       var  articleId=this.$route.params.id;
  this.getArticle(articleId);
+ this.tokendecode();
+ this.getfav(articleId);
     },
     methods:{
         getArticle(articleId){
@@ -62,10 +78,27 @@ export default {
                     if(res.data.status=='success'){
                         this.article= res.data.article; 
                         this.article.unidad=1;
+                         this.article.Descripcion__c=res.data.article.Descripcion__c
                     }
                   
             });
         },
+   
+   getfav(articleId){
+     console.log(this.Email)
+     console.log(articleId);
+            axios.post(this.url+'articlefav/'+articleId, {email:this.Email} ).then(res=>{
+              console.log(res);
+                    if(res.data.message=="Existe"){
+                 this.aux=true;
+                    }else{
+                      this.aux=false;
+                    }
+            });
+    console.log("AUX"+this.aux)
+        },
+
+      
       //Almacenar en el LS
     guardarProductosLocalStorage(article){
       var aux =false;
@@ -115,12 +148,54 @@ export default {
     }
      ,
         deleteArticle(articleId){
-          console.log(articleId);
          axios.delete(this.url+'article/'+articleId).then(res=>{
            console.log(res);
                swal('Articulo Eliminado','El articulo se ha borrado correctamente','success' );
           this.$router.push('/home');
          });
+
+        },
+
+        
+
+        deletefavorito(article){
+     
+          axios.put(this.url+'deletefav/'+article._id,{email: this.Email} ).then(res=>{
+           console.log(res);
+        
+   console.log(article._id+"%%%%%%%%%%%");
+      
+           this.aux=false;
+                      this.getArticle(article._id);
+ 
+         });
+        },
+
+        addfavoritos(articleId){
+      axios
+        .post(this.url + "addfav/"+this.Email, this.article)
+        .then(res => {
+          if (res.data.status == "success") {
+           
+          
+              this.article = res.data.article;
+        this.aux=true;
+            }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        this.getfav(articleId);
+   this.getArticle(articleId);
+
+        },
+        tokendecode(){
+           const token = localStorage.token
+const decoded = jwtDecode(token);
+          
+            this.Email=decoded.email;
+           
+         this.rol=decoded.role;
         },
        
  

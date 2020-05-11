@@ -8,7 +8,7 @@
     <br>
     <br>
     <div class="ultimoarticle">
-    <h2 class="subheader">Últimos artículos</h2>
+    <h2 class="subheader">{{this.title}}</h2>
 
     </div>
 
@@ -17,16 +17,10 @@
       <Articles v-bind:articles="articles"></Articles>
     </div>
   </section>
-    <aside id="lateral">
-             
-            <h5><b>ESTILOS DE MÚSICA</b></h5>
-         <ul v-for="categori in categori" :key="categori">
-           <li><router-link :to="{name:'/ArticleCategori', params:{id:categori.Family}}">{{categori.Family}}
-              </router-link> </li>
-         </ul>
-    </aside>
     </div>
+    
     <div class="clearfix"></div>
+   
   </div>
 </template>
 
@@ -43,15 +37,18 @@ export default {
     Articles
   },
   mounted(){
+      this.title=this.$route.params.title;
+ this.getcategori(this.title);
     this.getLastArticle();
-    this.getcategori();
+
   },
     data() {
    
     return {
        url: global.url,
       articles: [],
-      categori:[]
+      categori:[],
+        title:'',
     };
   },
   methods: {
@@ -64,11 +61,12 @@ export default {
         }
       });
     },
-    getcategori(){
-      axios.get(this.url+"articleCategori").then(res=>{
+    getcategori(title){
+      axios.get(this.url+"articleforcategori/"+title).then(res=>{
+        console.log(res.data);
           if (res.data.status == "success") {
-          this.categori = res.data.message.records
-          console.log(this.categori);
+          this.articles = res.data.article;
+          console.log(this.articles);
         }
       })
     }

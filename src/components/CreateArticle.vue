@@ -77,7 +77,7 @@ export default {
         categoria: "",
         stock__c: ""
       },
-      categori: [{}]
+      categori: []
     };
   },
   validations: {

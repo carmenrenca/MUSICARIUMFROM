@@ -281,7 +281,7 @@ width: 30%;}
   font-size: 1rem;
   width: 54%;
   margin-right: 114px;
-  top: -472px;
+  margin-top: -443px;
 }
 #tableCarro{
   width:100%
@@ -313,6 +313,7 @@ width: 30%;}
   margin-left: 243px;}
 .product{
   margin-left: 68px;
+  width: 100%;
 }
 .addCart{
   background-color: #8c8;
@@ -430,12 +431,17 @@ border: 1px solid #ddd;
 position: relative;
 z-index: 1;
 float: left;
-width: 100%;
-margin-top: 469px;}
+width: 55%;
+margin-left: 70px;
+margin-top: 38px;}
 .imgstyle{
   margin-left: -11%;
 height: 48%;
 width: 110%;
+}
+
+.buttonarticle{
+  margin-top: 88px;
 }
 .imgA{
     width: 80%;
@@ -462,14 +468,42 @@ width: 110%;
     clear:both;
     float:none;
 }
-
+#articlefav{
+  width: 71%;
+  margin-left: 88px;
+}
 #logo {
     width: 30%;
     font-size: 30px;
     float: left;
     margin-top: 35px;
 }
+.logofav{
+  width: 26px;
+  height: 23px;
+  margin-left: 141px;
+  margin-top: 73px;
+  position: absolute;
+  cursor: pointer;
 
+}
+
+.logofavarticle{
+  width: 26px;
+  height: 24px;
+  margin-left: -47px;
+  margin-top: 13px;
+  position: absolute;
+  cursor: pointer;
+}
+.logofav:hover{
+  background: url("../heartblack.png")  no-repeat;
+}
+
+.favheart{
+ background-color: red;
+  
+}
 #logo img {
     display: block;
     float: left;
@@ -697,24 +731,26 @@ margin-left: -90px;
 .cardimg{
   width: 100%;
   height: 100%;
+  cursor: pointer;
 }
 .preciocard{
   margin-top: -18px;}
 .titlecard{
   padding: 13px;
+  position: absolute;
 }
 
 .card{
   float:left;
   width:199px;
-  height: 301px;
+  height: 313px;
   border:1px solid #ccc;
   box-shadow: 1px 1px 2px #ddd;
   overflow: hidden;
   margin: 11px;
       margin-top: 33px;
   background: white;
-  cursor: pointer;
+
   transition: all 300ms;
 }
 .cardCliente{
@@ -738,7 +774,7 @@ margin-left: -90px;
   animation: showIcon 300ms linear
 }
 .cardfooter{
-  padding: 2px 16px;
+  padding: 6px 16px;
 
 }
 
@@ -1119,7 +1155,7 @@ transform: scale(1.1, 1.1);
     
     .card {
       width: 200px;
-      height: 280px;}
+      height: 313px;}
 }
 
 

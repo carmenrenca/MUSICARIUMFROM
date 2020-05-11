@@ -13,9 +13,11 @@
           </tr>
             <tr v-for="i in this.articlescarro"  v-bind:key='i' >
               <td>
+                <router-link :to="{name:'article', params:{id: i._id}}">
               <img 
             :src="url+'get-image/'+i.imagen" :alt="i.Name" v-if="i.imagen" class="cardimgcarro"
             />
+                </router-link>
             </td>
                   <td><router-link :to="{name:'article', params:{id: i._id}}">  {{i.Name}}</router-link></td> 
           
@@ -44,7 +46,7 @@ export default {
    props: ["articles"],
    
   components:{
-  
+  //
      
   },
   mounted(){
