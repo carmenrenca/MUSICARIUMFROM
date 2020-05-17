@@ -13,18 +13,24 @@
             </div>
    <div class="descripcionProduc">
       <p>{{article.Descripcion__c}}</p>
-     
-        <p class="display-4" style="text-align:right">{{article.Precio__c}}€</p>
+        <div v-if="article.Descuento">
+     <p class="display-4" style="text-align:right">{{article.PrecioFinal}}€</p>
+          <p class="precioantiguoArticle"  ><b>{{article.Precio__c}}€</b></p>
+
+     <p class="descuentoArticle"><b>- {{article.Descuento}}%</b></p>
+
+             </div>
+        <p  v-if="!article.Descuento" class="display-4" style="text-align:right">{{article.PrecioFinal}}€</p>
      
         <a class="addCart" @click="guardarProductosLocalStorage(article)" >Añadir a la cesta</a>
            <div v-if="aux==false">
        <a class="addfav" @click="addfavoritos(article._id)" >Añadir Favorito</a>
-         <a ><img src='../assets/heart.png' class="logofavarticle" alt="Logotipo"/></a>   
+         <a  @click="addfavoritos(article._id)" ><img src='../assets/heart.png' class="logofavarticle" alt="Logotipo"/></a>   
 
         </div>
           <div  v-if="aux==true" >
-              <a class="addfav" @click="deletefavorito(article)" >Eliminar de  Favorito</a>
-         <a  ><img src='../assets/heartblack.png' class="logofavarticle" alt="Logotipo"/></a>   
+              <a class="addfav" @click="deletefavorito(article)" >Añadido a favoritos</a>
+         <a @click="deletefavorito(article)"   ><img src='../assets/heartblack.png' class="logofavarticle" alt="Logotipo"/></a>   
 
           </div>
           
@@ -67,9 +73,10 @@ export default {
         }
     }, mounted(){
       var  articleId=this.$route.params.id;
- this.getArticle(articleId);
  this.tokendecode();
  this.getfav(articleId);
+  this.getArticle(articleId);
+
     },
     methods:{
         getArticle(articleId){
@@ -94,6 +101,8 @@ export default {
                     }else{
                       this.aux=false;
                     }
+                      this.getArticle(articleId);
+
             });
     console.log("AUX"+this.aux)
         },
@@ -180,10 +189,15 @@ export default {
           
               this.article = res.data.article;
         this.aux=true;
+            }else{
+                this.getArticle(articleId);
+ this.getfav(articleId);
             }
         })
         .catch(error => {
           console.log(error);
+             this.getArticle(articleId);
+ this.getfav(articleId);
         });
         this.getfav(articleId);
    this.getArticle(articleId);

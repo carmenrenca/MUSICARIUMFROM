@@ -29,11 +29,18 @@
         <img :src="url+'get-image/'+articles.imagen" :alt="articles.Name" v-if="articles.imagen" class="cardimg" />
               </router-link>    
              <div class="cardfooter">
+               
     <p class="titlecard"><b>{{articles.Name}}</b></p>
-  <!-- <span class="date">{{articles.date | moment('from', 'now')}}</span>-->   
+             <div v-if="articles.Descuento">
+     <p class="preciocard" style="color:#e21e04"><b>{{articles.PrecioFinal}}€</b></p>
+          <p class="precioantiguo"  ><b>{{articles.Precio__c}}€</b></p>
+
+     <p class="descuento"><b>- {{articles.Descuento}}%</b></p>
+
+             </div>
+     <p v-if="!articles.Descuento" class="preciocard"><b>{{articles.PrecioFinal}}€</b></p>
   
-         <a v-if="articles.Idfav!=''" @click="addfavoritos(articles)" ><img src='../assets/heart.png' class="logofav" alt="Logotipo"/></a>   
-         <a v-if="articles.Idfav==''" @click="addfavoritos(articles)" ><img src='../assets/heartblack.png' class="logofav" alt="Logotipo"/></a>   
+         <a  @click="guardarProductosLocalStorage(articles)" ><img src='../assets/bolsa.png' class="logofav" alt="Logotipo"/></a>   
 
 </div>         
   </div>
@@ -76,7 +83,6 @@ export default {
     this.tokendecode(); 
     this.getLastArticle();
     this.getcategori();
-    this.getfav();
   },
     data() {
    
@@ -95,7 +101,7 @@ export default {
   methods: {
     getLastArticle() {
         console.log(this.Email)
-      axios.get(this.url+"articles/"+this.Email).then(res => {
+      axios.get(this.url+"articles").then(res => {
         console.log(res);
         if (res.data.status == "success") {
           this.articles = res.data.articles;
@@ -104,34 +110,53 @@ export default {
         }
       });
     },
-   getfav(){
-     console.log(this.Email)
-  
-            axios.get(this.url+'getfav/'+this.Email ).then(res=>{
-              console.log(res.data);
-              this.favoritos=res.data.articles;
-            });
-            console.log(this.favoritos);
-        },
-    
-        addfavoritos(article){
-            console.log(this.article);
-      axios
-        .post(this.url + "addfav/"+this.Email, article)
-        .then(res => {
-          if (res.data.status == "success") {
-           
-          
-              this.article = res.data.article;
-        
-            }
-        })
-        .catch(error => {
-          console.log(error);
-        });
-        this.getLastArticle();
-        },
+    obtenerProductosLocalStorage(){
+        let productoLS;
+
+        //Comprobar si hay algo en LS
+        if(localStorage.getItem('carrito') === null){
+            productoLS = [];
+        }
+        else {
+            productoLS = JSON.parse(localStorage.getItem('carrito'));
+        }
+        return productoLS;
+    },
+        //Almacenar en el LS
+    guardarProductosLocalStorage(article){
+      var aux =false;
+   this.productos = this.obtenerProductosLocalStorage();
+        this.productos.forEach(function(entry) {
+   if(entry._id== article._id){
+
+   
+         console.log("coincide"+entry._id)
+     
+     entry.unidad=entry.unidad+1;
+   
+             localStorage.setItem('carrito', JSON.stringify(this.productos));
+        console.log(this.productos)
+         aux=true;      
+   }
+  }, this);
+
+
+       
+    if(aux==false){
+       //Agregar el producto al carrito
+   article.unidad=1;
+   console.log(article);
+        this.productos.push(article );
+          //Agregamos al LS
+      localStorage.setItem('carrito', JSON.stringify(this.productos));
+
+    }
+       
+   this.$router.push('/carro');
+     
  
+    
+    },
         tokendecode(){
            const token = localStorage.token
 const decoded = jwtDecode(token);

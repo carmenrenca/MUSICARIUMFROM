@@ -32,6 +32,7 @@ import axios from 'axios';
  import jwtDecode from 'jwt-decode'
 import swal from "sweetalert";
 import emailjs from 'emailjs-com';
+import  Cliente from'../models/Cliente';
 
   export default {
       mounted() {
@@ -44,19 +45,21 @@ import emailjs from 'emailjs-com';
       return {
        idCliente:'', cliente:'',email:'',
                  url: global.url,
-      
+      articulos:[],
         pedido:new Pedido("","","","",""),
-
+cliente:[],
       }
     },
     methods: {
   
       tramitar(){
                  this.tokendecode();
+
+                  this.articulos = JSON.parse(localStorage.getItem('carrito'));
         console.log(this.id+"decode");
         if(this.pedido.Provincia__c && this.pedido.Direccion__c && this.pedido.Ciudad__c  && this.pedido.total__c ){
  console.log(this.pedido);
-             axios.post(this.url + "pedido/" ,{Status__c:this.pedido.Status__c, Ciudad__c:this.pedido.Ciudad__c, total__c:this.pedido.total__c, cliente__c: this.pedido.cliente__c, Provincia__c: this.pedido.Provincia__c,  Direccion__c: this.pedido.Direccion__c}).then(res => {
+             axios.post(this.url + "pedido/" ,{Status__c:this.pedido.Status__c, Infocliente:this.cliente, Ciudad__c:this.pedido.Ciudad__c,articulos:  this.articulos, total__c:this.pedido.total__c, cliente__c: this.pedido.cliente__c, email:this.pedido.email, Provincia__c: this.pedido.Provincia__c,  Direccion__c: this.pedido.Direccion__c}).then(res => {
      
         if (res) {
           console.log(res);
@@ -64,7 +67,7 @@ import emailjs from 'emailjs-com';
         }
       });
 
-      this.enviar();
+    //  this.enviar();
              this.$router.push('/fintramite'); 
 
         }else{
@@ -83,9 +86,11 @@ import emailjs from 'emailjs-com';
           console.log("eeentraaaa")
            const token = localStorage.token
 const decoded = jwtDecode(token);
+this.cliente=decoded;
            this.idCliente=decoded.sub;
            this.email=decoded.email;
           this.pedido.cliente__c=this.idCliente;
+          this.pedido.email=this.email;
             console.log(decoded);
             console.log(this.idCliente+"iiidddd");
              const carrito = localStorage.carrito

@@ -23,8 +23,9 @@
   </thead>
   <tbody>
     <tr v-for="pedido in pedido" :key="pedido._id">
-      <td> <b> {{pedido._id}}</b></td>
-     
+
+           <td>   <router-link :to="{name:'pedidoUser', params:{id: pedido._id}}"><b> {{pedido._id}}</b></router-link> </td>
+
         <td>{{pedido.date | moment('from', 'now')}}</td>
       <td>{{pedido.total__c}}€</td>
        <td>{{pedido.Status__c}}</td>

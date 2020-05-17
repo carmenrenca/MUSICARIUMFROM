@@ -28,7 +28,7 @@
             </tr>
      </table>
      <div class="total"><h2>Total: {{this.suma}} </h2>
-      <a class="hacerpedido" href="/tramite"  >Hacer Pedido</a></div>
+      <a class="hacerpedido" @click="tramitarpedido()" >Hacer Pedido</a></div>
      
 
    </div>
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
+
 //import axios from 'axios';
 import {global} from "../../global";
 //import Articles from './Articles';
@@ -46,7 +48,7 @@ export default {
    props: ["articles"],
    
   components:{
-  //
+  
      
   },
   mounted(){
@@ -64,6 +66,19 @@ console.log(this.articlescarro);
     };
   },
   methods: {
+    tramitarpedido(){
+     
+        if(this.articlescarro.length==0){
+             swal(
+                      "No dispone de ningun articulo en el carrito",
+                      "Añade un articulo que desee al carrito para proceder a realizar el tramite ",
+                      "error"
+                    );
+            
+        }else{
+       this.$router.push('tramite');
+        }
+    },
    obtenerProductosLocalStorage(){
       
 

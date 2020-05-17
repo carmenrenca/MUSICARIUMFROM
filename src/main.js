@@ -20,6 +20,11 @@ import CreateArticle from './components/CreateArticle.vue';
 import CrearCategori from './components/CrearCategory.vue';
 import favorito from './components/favoritos.vue';
 import Blog from './components/blog.vue';
+import Perfil from './components/perfil.vue';
+import DatosAcceso from './components/datosAcceso.vue';
+import DatosPersonales from './components/DatosPersonales.vue';
+import AllPedidos from './components/AllPedidos.vue';
+import PedidoUser from './components/pedidoUser.vue';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -56,6 +61,11 @@ const  routes=[
   {path:'/pedidos', component:pedidos},
   {path:'/saveCategori', component:CrearCategori},
   {path:'/blog', component:Blog},
+  {path:'/Perfil' , component:Perfil},
+  {path:'/datosAcesso', component:DatosAcceso},
+  {path:'/datosPersonales', component:DatosPersonales},
+  {path:'/AllPedidos', component:AllPedidos},
+  {path:'/pedidoUser/:id',name:'pedidoUser', component:PedidoUser},
 ]
 
 //hooks(this.routes)

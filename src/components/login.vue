@@ -87,6 +87,7 @@ import Cliente from "../models/Cliente.js";
         })
         .then(res => {
           localStorage.setItem("token", res.data.token);
+          console.log(res.data.token);
           this.email = "";
           this.password = "";
             localStorage.removeItem("rol");

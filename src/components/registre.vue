@@ -113,7 +113,8 @@ export default {
           email: this.clientes.email,
           apellido: this.clientes.apellido,
           telefono: this.clientes.telefono,
-          direccion: this.clientes.direccion
+          direccion: this.clientes.direccion,password:this.clientes.password,
+          rol:"cliente"
         })
         .then(res => {
           console.log(res);

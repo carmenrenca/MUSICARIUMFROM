@@ -8,7 +8,10 @@
             <label for="title">Titulo</label>
             <input type="text" name="title" v-model="article.Name" />
           </div>
-
+      <div class="form-group">
+            <label for="precio">Descuento %</label>
+            <input type="number" name="title" v-model="article.Descuento"  min="10" max="100"/>
+          </div>
           <div class="form-group">
             <label for="precio">Precio</label>
             <input type="text" name="title" v-model="article.Precio__c" />

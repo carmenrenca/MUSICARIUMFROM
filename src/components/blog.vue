@@ -2,10 +2,7 @@
 
 
 <div class="general">
-   <template>
 
-
-</template>
  
 
 <slider></slider>
@@ -23,7 +20,7 @@
                 </div>
                 
   </section>
-    <Sidebar></Sidebar>
+     <Sidebar></Sidebar>
     </div>
     <div class="clearfix col-md-1">
      

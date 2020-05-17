@@ -23,26 +23,26 @@
                         <router-link to="/home">Inicio</router-link>
                       
                         </li>
-                         <li v-if="this.rol=='Cliente'" >
-                        <router-link to="/pedidos">Mis Pedidos</router-link>
+                         <li v-if="this.rol=='cliente'"  >
+                        <router-link  to="/pedidos">Mis Pedidos</router-link>
                       
                         </li>
-                        <li >
-                       <router-link v-if="this.rol=='Administrador'" to="/Cliente">Pedidos</router-link>
+                        <li  v-if="this.rol=='Administrador'" >
+                       <router-link to="/AllPedidos">Pedidos</router-link>
                         </li>
                        
                         <li >
                         <router-link to="/TablonEventos">Eventos</router-link>
                       
                         </li>
-                        <li >
-                       <router-link v-if="this.rol=='Administrador'" to="/Cliente">Usuarios</router-link>
+                        <li v-if="this.rol=='Administrador'" >
+                       <router-link to="/Cliente">Usuarios</router-link>
                         </li>
                           <li >
-                       <router-link v-if="this.rol=='cliente'" to="/Cliente">Mi Perfil</router-link>
+                       <router-link v-if="this.rol=='cliente'" to="/Perfil">Mi Perfil</router-link>
                         </li>
-                        <li>
-                            <router-link v-if="this.rol=='cliente'" to="/favorito" >Favoritos</router-link>
+                        <li  v-if="this.rol=='cliente'">
+                            <router-link to="/favorito" >Favoritos</router-link>
                         </li>
                             <li >
                          
@@ -65,7 +65,7 @@
                 </nav>
  <div id="categorias">
   <ul v-for="categori in categori" :key="categori">
-           
+        
            <li><router-link :to="{name:'articlecategori',  params:{title: categori.title}}">{{categori.title}}
               </router-link> </li>
          </ul>
@@ -137,7 +137,7 @@ const decoded = jwtDecode(token);
   if (result.value) {
      localStorage.removeItem('token');      
           localStorage.removeItem('carrito');      
-       
+          localStorage.removeItem('Totalcarrito'); 
             setTimeout(() => {
               this.$router.push("/")
             }, 1500)
