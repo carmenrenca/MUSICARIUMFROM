@@ -63,8 +63,15 @@ cliente:[],
      
         if (res) {
           console.log(res);
-        
+           axios.post(this.url+'crearpdf/'+this.pedido._id, this.pedido).then(res=>{
+              console.log(res);
+                    if(res.data.status=='success'){
+                        console.log("pdf generado")
+                    }
+                  
+            });
         }
+        
       });
 
     //  this.enviar();
@@ -81,6 +88,8 @@ cliente:[],
         }
      
       },
+
+
 
         tokendecode(){
           console.log("eeentraaaa")

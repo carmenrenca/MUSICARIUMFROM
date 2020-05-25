@@ -25,6 +25,8 @@ import DatosAcceso from './components/datosAcceso.vue';
 import DatosPersonales from './components/DatosPersonales.vue';
 import AllPedidos from './components/AllPedidos.vue';
 import PedidoUser from './components/pedidoUser.vue';
+import Search from './components/Search.vue';
+
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -65,6 +67,8 @@ const  routes=[
   {path:'/datosAcesso', component:DatosAcceso},
   {path:'/datosPersonales', component:DatosPersonales},
   {path:'/AllPedidos', component:AllPedidos},
+  {path:'/redirect/:searchString', component:Search},
+
   {path:'/pedidoUser/:id',name:'pedidoUser', component:PedidoUser},
 ]
 

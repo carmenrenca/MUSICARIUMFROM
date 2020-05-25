@@ -26,9 +26,8 @@
 <br>
   <ul class="list-group list-group-flush infopedido"  v-for="pedido in pedido" :key="pedido._id">
     <h5>Dirección de envio:</h5>
-      <li class="list-group-item"><b>Pedido:</b> {{pedido.Provincia__c}}</li>
-    <li class="list-group-item"><b>Ciudad: </b> {{pedido.Ciudad__c}}</li>
-   <li class="list-group-item"><b>Dirección: </b> {{pedido.Direccion__c}}</li>
+      <li class="list-group-item"><b>Pedido:</b> {{pedido._id}}</li>
+    <li class="list-group-item"><b>Dirección: </b> {{pedido.Ciudad__c}}</li>
   </ul>
 <br>
   <ul class="list-group list-group-flush infopedido"  v-for="pedido in pedido" :key="pedido._id">
@@ -62,9 +61,11 @@
             
             
             </tr>
+
      </table>
-  
-     
+ 
+                 <input class="changecuentabutton" @click="descargarPDF(PedidoId)" type="submit" value="Imprimir">
+
 
    </div>
 
@@ -77,9 +78,11 @@
    
     
 </template>
-
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="html2pdf.bundle.min.js"></script>
 <script>
-
+import jsPDF from 'jspdf';
  import jwtDecode from 'jwt-decode'
 import {global} from '../../global';
 import axios from "axios";
@@ -106,7 +109,7 @@ this.getPedido(this.PedidoId);
 
     },
     methods:{
-
+ 
          verificarol(){
 
                const token = localStorage.token
@@ -146,6 +149,18 @@ changeStatus(){
                        this.articlescarro=res.data.pedido[0].articulos;
                        this.Cliente=res.data.pedido[0].Infocliente;
                       console.log(   this.articlescarro);
+                    }
+                  
+            });
+ },
+
+ descargarPDF( PedidoId){
+
+      axios.get(this.url+'getpdf/'+PedidoId).then(res=>{
+              console.log(res);
+                    if(res.data.status=='success'){
+
+                        console.log("pdf generado");
                     }
                   
             });

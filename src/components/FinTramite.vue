@@ -125,27 +125,10 @@ const decoded = jwtDecode(token);
             console.log(this.Name)
         },
          descargarPDF(){
-         
-var doc = new jsPDF();
-  var img = new Image();
-    img.src = 'logo.png';
-    doc.addImage(img, "PNG", 1, 1);
-             doc.setFontSize(18);
-  doc.setTextColor(40);
-  doc.setFontStyle('bold');
-  doc.text("FACTURA", 80, 12);
+      
+      
+        
 
-      var columns = [ "Nombre", "Precio","Unidades"];
-var rows = [];
- this.articlescarro.forEach(element =>{
-   console.log(element);
-      var temp = [element.Name,element.Precio__c,element.unidad];
-      rows.push(temp);
-    }); 
-doc.autoTable(columns, rows);
-
-
-      doc.save('table.pdf');
          }
          }
     

@@ -47,7 +47,8 @@ export default {
    mounted() {
     this.clienteID = this.$route.params.id;
  this.tokendecode();
- this.getPedido(this.id);
+ console.log(this.email);
+ this.getPedido(this.email);
   },
     data() {
    
@@ -55,7 +56,7 @@ export default {
       clienteID:'',
     pedido:[],
       url: global.url ,
-      id:'',
+      email:'',
    
       
     };
@@ -67,7 +68,7 @@ export default {
     const token = localStorage.token
 const decoded = jwtDecode(token);
 console.log(decoded.sub)
-this.id=decoded.sub;
+this.email=decoded.email;
   },
     cerrarsesion(){
           localStorage.removeItem('usertoken');      
@@ -78,10 +79,10 @@ this.id=decoded.sub;
             
          },
 
-      getPedido(id){
-          console.log(id);
+      getPedido(email){
+          console.log(email);
           console.log(this.url)
-            axios.get(this.url+'getpedido?cliente__c='+id).then(res=>{
+            axios.get(this.url+'getPedidoCliente/'+email).then(res=>{
               console.log(res);
                     if(res.data.status=='success'){
                         this.pedido= res.data.pedido; 
